@@ -1,0 +1,100 @@
+#include <stdio.h>
+#include <string.h>
+
+// TUGAS BESAR. MEKANISME MESIN ATM SEDERHANA
+// NAMA = MUHAMMAD RABENNY			Username = 666666
+// NIM  = 12250511472 				    	pass	   = 12345
+
+// Fungsi untuk menampilkan menu utama
+void Menu() {
+    printf("\n====================\n");
+    printf("1. Cek Saldo\n2. Tarik Tunai\n3. Setor Tunai\n4. Keluar\n\n");
+    printf("Pilih opsi: ");
+}
+
+// Fungsi untuk cek saldo
+void cekSaldo(float saldo) {
+    printf("Saldo Anda saat ini: Rp%.2f\n", saldo);
+}
+
+// Fungsi untuk tarik tunai
+float tarikTunai(float saldo) {
+    float jumlah;
+    printf("Masukkan jumlah yang ingin ditarik: Rp");
+    scanf("%f", &jumlah);
+    if (jumlah <= saldo) {
+        saldo -= jumlah;
+        printf("Penarikan berhasil. Saldo Anda sekarang: Rp%.2f\n", saldo);
+    } else {
+        printf("Saldo tidak mencukupi!\n");
+    }
+    return saldo;
+}
+
+// Fungsi untuk setor tunai
+float setorTunai(float saldo) {
+    float jumlah;
+    printf("Masukkan jumlah yang ingin disetor: Rp");
+    scanf("%f", &jumlah);
+    saldo += jumlah;
+    printf("Setoran berhasil. Saldo Anda sekarang: Rp%.2f\n", saldo);
+    return saldo;
+}
+
+// Fungsi untuk login
+int login(char username[], char password[]) {
+    char Usernamebenar[] = "666666";
+    char Passwordbenar[] = "12345";
+    if (strcmp(username, Usernamebenar) == 0 && strcmp(password, Passwordbenar) == 0) {
+        return 1;
+    } else {
+        return 0;
+    }
+}
+
+int main() {
+    char username[20], password[20];
+    float saldo = 100000.0;  // Saldo awal
+    int pilihan;
+    int loginStatus = 0;
+
+    printf("===== BANK URANG-AWAK =====\n"); 
+
+    while (!loginStatus) {
+        printf("Masukkan username: ");
+        scanf("%s", username);
+        printf("Masukkan password: ");
+        scanf("%s", password);
+
+        if (login(username, password)) {
+            loginStatus = 1;
+            printf("Login berhasil!\n");
+        } else {
+            printf("Username atau password salah. Coba lagi.\n");
+        }
+    }
+
+    do {
+        Menu();
+        scanf("%d", &pilihan);
+
+        switch (pilihan) {
+            case 1:
+                cekSaldo(saldo);
+                break;
+            case 2:
+                saldo = tarikTunai(saldo);
+                break;
+            case 3:
+                saldo = setorTunai(saldo);
+                break;
+            case 4:
+                printf("Kepuasan layanan adalah PRIORITAS kami bersama. TERIMIKASIH!\n");
+                break;
+            default:
+                printf("Opsi tidak valid. Silakan coba lagi.\n");
+        }
+    } while (pilihan != 4);
+
+    return 0;
+}
